@@ -40,14 +40,16 @@ def main():
     size = 2048
     iterations = 3
 
-    # Prefer CUDA, else MPS, else exit
-    if torch.cuda.is_available():
-        name, device = "cuda", torch.device("cuda")
-    elif getattr(torch.backends, "mps", None) is not None and torch.backends.mps.is_available():
-        name, device = "mps", torch.device("mps")
-    else:
-        print("No supported GPU backend available (CUDA or MPS).")
-        return
+    # # Prefer CUDA, else MPS, else exit
+    # if torch.cuda.is_available():
+    #     name, device = "cuda", torch.device("cuda")
+    # elif getattr(torch.backends, "mps", None) is not None and torch.backends.mps.is_available():
+    #     name, device = "mps", torch.device("mps")
+    #run cpu
+    name, device = "cpu", torch.device("cpu")
+    # else:
+    #     print("No supported GPU backend available (CUDA or MPS).")
+    #     return
 
     print(f"Benchmarking {size}x{size} matrix multiplication on {name}")
     avg_time, gflops = benchmark_matrix_mult(size, device, iterations)
